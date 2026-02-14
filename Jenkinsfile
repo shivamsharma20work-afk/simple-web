@@ -14,6 +14,18 @@ pipeline{
                 sh 'docker build -t simple .'
             }
         }
+        stage('Push to Dockerhub') {
+            steps{
+                echo 'Pushing this Image to Docker Hub'
+                withCredentials([usernamePassword('credentialsId': "dockerhubcreds" ,
+                passwordVariable:"dockerHubPass",
+                usernameVariable:"dockerHubUser")]){
+                sh 'docker login -u ${env.dockerHubUser} -p ${env.dockerHubPass}'
+                sh 'docker image tag simple:latest shivam011/simple:latest'
+                sh 'docker push ${env.dockerHubUser}/simple:latest'
+                }
+            }
+        }
         stage('Test') {
             steps{
                 echo 'Testing the code'
@@ -22,7 +34,7 @@ pipeline{
         stage('Deploy') {
             steps{
                 echo 'Deploying the code'
-                sh 'docker run -d -p 3000:3000 simple'
+                sh 'docker compose up'
             }
         }
     }
