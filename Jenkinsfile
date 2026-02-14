@@ -4,12 +4,17 @@ pipeline{
     agent any
 
     stages{
-        stage('Code'){
+        stage('hello') {
             steps{
                 script{
-                    clone("https://github.com/shivamsharma20work-afk/simple-web.git","main")
+                    hello()
                 }
-
+            }
+        }
+        stage('Code'){
+            steps{
+                echo 'cloning the code'
+                git url: "https://github.com/shivamsharma20work-afk/simple-web.git", branch: "main"
             }
         }
         stage('Build') {
