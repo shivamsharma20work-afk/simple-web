@@ -22,7 +22,7 @@ pipeline{
                 usernameVariable:"dockerHubUser")]){
                 sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPass}"
                 sh 'docker image tag simple:latest shivam011/simple:latest'
-                sh 'docker push ${env.dockerHubUser}/simple:latest'
+                sh 'docker push ${dockerHubUser}/simple:latest'
                 }
             }
         }
