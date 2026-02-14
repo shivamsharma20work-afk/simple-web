@@ -1,11 +1,15 @@
+@Library("Shared") _
+
 pipeline{
     agent any
 
     stages{
         stage('Code'){
             steps{
-                echo 'cloning the code'
-                git url: "https://github.com/shivamsharma20work-afk/simple-web.git", branch: "main"
+                script{
+                    clone("https://github.com/shivamsharma20work-afk/simple-web.git","main")
+                }
+
             }
         }
         stage('Build') {
