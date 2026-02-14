@@ -20,7 +20,7 @@ pipeline{
                 withCredentials([usernamePassword('credentialsId': "dockerhubcreds" ,
                 passwordVariable:"dockerHubPass",
                 usernameVariable:"dockerHubUser")]){
-                sh 'docker login -u ${env.dockerHubUser} -p ${env.dockerHubPass}'
+                sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPass}"
                 sh 'docker image tag simple:latest shivam011/simple:latest'
                 sh 'docker push ${env.dockerHubUser}/simple:latest'
                 }
@@ -34,7 +34,7 @@ pipeline{
         stage('Deploy') {
             steps{
                 echo 'Deploying the code'
-                sh 'docker compose up'
+                sh 'docker compose up -d '
             }
         }
     }
